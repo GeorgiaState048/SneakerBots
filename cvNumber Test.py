@@ -131,7 +131,7 @@ print("element87 found")
 element87.send_keys('894')
 
 #aBrowserDriver.switch_to.default_content()
-#print("switched to default content")s
+#print("switched to default content")
 
 element10 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
                                                         ((By.XPATH, "//button[text()='Place Order')]")))
