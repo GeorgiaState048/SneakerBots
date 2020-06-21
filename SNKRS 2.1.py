@@ -50,7 +50,7 @@ if __name__ == '__main__':
             print("Code is already removed")
 
 
-    # Login method after checkout is clicked
+    # Login method after checkout is click
     def Login():
         element0 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
                                                                    ((By.XPATH,
