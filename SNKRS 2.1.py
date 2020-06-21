@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.options import Options
 # sMarketName = "https://www.nike.com/launch" #Feed
 # sMarketName = "https://www.nike.com/launch?s=upcoming" #Upcoming
 # sMarketName = "https://www.nike.com/launch?s=in-stock" #In Stock
-sMarketName = "https://www.nike.com/launch/t/air-jordan-4-grape-fire-red"
+sMarketName = "https://www.nike.com/launch/t/air-max-90-n7"
 sUserName = "jonathanlaurent754@gmail.com"
 sPassword = "Jonathan013"
 timeToWait = 30 * 24 * 60 * 60  # 30 days
