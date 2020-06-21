@@ -61,6 +61,7 @@ if __name__ == '__main__':
         print("Login Successful")
 
 
+    print("Login please")
     # Check phone app for sizes
     element = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//button[text()="M 9 / W 10.5"]')))
@@ -75,10 +76,7 @@ if __name__ == '__main__':
     print("element1 found")
     # Add shoe to cart
     aBrowserDriver.execute_script("arguments[0].click();", element1)
-    print("Moving to Login Page")
-
-    Login()
-
+    #print("Moving to Login Page")
     # time.sleep(4)
 
     removeError()
@@ -91,6 +89,21 @@ if __name__ == '__main__':
     # element3.send_keys('894')
     # time.sleep(5)
     # click save and continue button
+
+    iframe = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
+                                                    ((By.XPATH, "//iframe[contains(@title, 'creditCardIframeForm')]")))
+    print(iframe)
+    aBrowserDriver.switch_to.frame(iframe)
+
+    print("switched to iframe")
+
+    element5 = WebDriverWait(aBrowserDriver, timeToWait).until(
+        EC.presence_of_element_located((By.XPATH, '//input[contains(@data-shortname, "cvv")]')))
+    print("cv number found")
+    element5.send_keys('894')
+
+    aBrowserDriver.switch_to.default_content()
+
     element4 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//button[contains(@data-qa, "save-button")]')))
     element8 = aBrowserDriver.find_elements_by_xpath('//button[contains(@data-qa, "save-button")]')
@@ -109,7 +122,7 @@ if __name__ == '__main__':
     aBrowserDriver.execute_script("arguments[0].click();", element8[1])
 
     element9 = WebDriverWait(aBrowserDriver, timeToWait).until(
-        EC.presence_of_element_located((By.XPATH, '//button[text()="Submit Order"]')))
+        EC.element_to_be_clickable((By.XPATH, '//button[text()="Submit Order"]')))
 
     print("element9 found")
     # Click Submit Order
