@@ -3,7 +3,7 @@ import datetime
 
 import openpyxl
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement
@@ -44,10 +44,10 @@ time.sleep(5)
 def removeError():
     try:
         element2 = WebDriverWait(aBrowserDriver, 5).until(EC.presence_of_element_located
-                                                               ((By.XPATH, '//button[text()="OK"]')))
+                                                        ((By.XPATH, '//button[text()="OK"]')))
         aBrowserDriver.execute_script("arguments[0].click();", element2)
         print("Code Removed")
-    except NoSuchElementException:
+    except TimeoutException:#change to time is expired error
         print("Code is already removed")
 
 #Login method after checkout is clicked
@@ -98,10 +98,6 @@ removeError()
 
 #time.sleep(4)
 
-#removeError()
-
-#time.sleep(4)
-
 element3 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
                                                           ((By.XPATH, '//button[text()="Continue to Payment"]')))
 element3.click()
@@ -111,7 +107,6 @@ print("Continuing to Payment")
 #element3.click()
 
 removeError()
-#removeError()
 
 time.sleep(2)
 #Type in cvNumber automatically (Make a separate that doesnt do this just in case
@@ -121,12 +116,27 @@ time.sleep(2)
 print("The search begins")
 print("the")
 
-testElement = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.XPATH, '//h3[text()="SELECT PAYMENT METHOD")]')))
-print("test element found")
+iframe = WebDriverWait(aBrowserDriver, 5).until(EC.presence_of_element_located
+                                                        ((By.XPATH, "//iframe[contains(@title, 'Credit Card CVV Form')]")))
+print(iframe)
+aBrowserDriver.switch_to.frame(iframe)
+
+print("switched to iframe")
+
+"""testElement = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.XPATH, '//h3[text()="SELECT PAYMENT METHOD")]')))
+print("test element found")"""
 
 element87 = aBrowserDriver.find_element_by_xpath("//input[contains(@placeholder, 'XXX')]")
 print("element87 found")
 element87.send_keys('894')
+
+#aBrowserDriver.switch_to.default_content()
+#print("switched to default content")
+
+element10 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
+                                                        ((By.XPATH, "//button[text()='Place Order')]")))
+
+print("element10 found")
 
 #click save and continue button
 
@@ -135,7 +145,7 @@ element87.send_keys('894')
                                                            #((By.XPATH, "//input[contains(@placeholder, 'XXX')]")))
 #aBrowserDriver.find_element_by_xpath("//input[contains(@placeholder, 'XXX')]")
 #print("element4 found")
-removeError()
+#removeError()
 
 #Click drop-down sign(Payment summary) (Make a separate one that doesnt have to click on the credit card because it
 # didn't make me do that when the product was in stock)
