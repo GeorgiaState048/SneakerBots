@@ -31,7 +31,7 @@ if __name__ == '__main__':
     aBrowserDriver.get(sMarketName)
     time.sleep(5)
 
-    # Login to SNKRS
+    # Login to SNKRSs
     # Need to change code to login first
     """def Login():
         aBrowserDriver.find_element_by_xpath('//button[text()="Join / Log In"]').click()
