@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.options import Options
 # sMarketName = "https://www.nike.com/launch" #Feed
 # sMarketName = "https://www.nike.com/launch?s=upcoming" #Upcoming
 # sMarketName = "https://www.nike.com/launch?s=in-stock" #In Stock
-shoeMarketName = "https://www.sneakersnstuff.com/en/product/45050/adidas-yeezy-qntm-barium"
+shoeMarketName = "https://www.sneakersnstuff.com/en/product/44742/nike-dunk-low-sp"
 sMarketName = "https://www.sneakersnstuff.com/en/auth/view"
 sUserName = "jonathanlaurent754@gmail.com"
 sPassword = "Soccer!013"
@@ -72,17 +72,20 @@ if __name__ == '__main__':
 
 
     #choosing size (Possibly change this to let me choose the size)
-    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.CLASS_NAME, 'product-sizes__label')))
+    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.element_to_be_clickable((By.CLASS_NAME, 'product-sizes__label')))
+    print("product sizes found")
     element1 = aBrowserDriver.find_elements_by_class_name('product-sizes__label')
 
-    aBrowserDriver.execute_script("arguments[0].click();", element1[5])
+    aBrowserDriver.execute_script("arguments[0].click();", element1[4])
 
     #adding product to cart
-    element2 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.XPATH, "//button[contains(@type, 'submit')]")))
+    element2 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(@type, 'submit')]")))
     print("element2 found")
     #element2.click()
     aBrowserDriver.execute_script("arguments[0].click();", element2)
     print("moving to checkout slide")
+
+    time.sleep(1)
 
     #moving to checkout page
     cart = "https://www.sneakersnstuff.com/en/cart/view"
