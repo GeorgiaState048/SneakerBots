@@ -12,12 +12,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 #https://shopnicekicks.com/collections/recent-launch/products/nike-dunk-low-sp-university-red-mens-lifestyle-shoe-red-white
+#https://shopnicekicks.com/collections/recent-launch/products/nike-daybreak-sp-mens-lifestyle-shoe-sail-teal-navy
 #try to login first
 #Work on dismiss error
 # sMarketName = "https://www.nike.com/launch" #Feed
 # sMarketName = "https://www.nike.com/launch?s=upcoming" #Upcoming
 # sMarketName = "https://www.nike.com/launch?s=in-stock" #In Stock
-shoeMarketName = "https://shopnicekicks.com/collections/mens-kicks/products/nike-react-vision-mens-lifestyle-shoe-black-black"
+shoeMarketName = "https://shopnicekicks.com/collections/recent-launch/products/nike-daybreak-sp-mens-lifestyle-shoe-sail-teal-navy"
 sMarketName = "https://shopnicekicks.com/account/login"
 sUserName = "jonathanlaurent754@gmail.com"
 sPassword = "Soccer!013"
@@ -41,7 +42,7 @@ if __name__ == '__main__':
     aBrowserDriver.maximize_window()
     aBrowserDriver.get(sMarketName)
 
-    time.sleep(15)
+    time.sleep(30)
 
     # Login to SNKRSs
     # Need to change code to login first
@@ -73,12 +74,14 @@ if __name__ == '__main__':
         print("Login Successful")
 
     time.sleep(5)
+    element28 = WebDriverWait(aBrowserDriver, timeToWait).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[contains(@data-action, 'add-to-cart')]")))
 
     #choosing size (Possibly change this to let me choose the size)
-    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.CLASS_NAME, 'SizeSwatch__Radio')))
+    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "option-0-7")]')))
     print("product sizes found")
     element1 = aBrowserDriver.find_elements_by_class_name('SizeSwatch__Radio')
-    aBrowserDriver.execute_script("arguments[0].click();", element1[1])
+    aBrowserDriver.execute_script("arguments[0].click();", elementT)
 
     # adding product to cart
     element2 = WebDriverWait(aBrowserDriver, timeToWait).until(
