@@ -1,9 +1,10 @@
 import time
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from datetime import datetime
 from selenium.webdriver.chrome.options import Options
 shoeMarketName = "https://www.footlocker.com/product/~/FY1256.html"
 sMarketName = "https://www.footlocker.com/account/login"
@@ -40,8 +41,6 @@ if __name__ == '__main__':
     aBrowserDriver.maximize_window()
     aBrowserDriver.get(sMarketName)
 
-    time.sleep(25)
-
     # Login to SNKRSs
     # Need to change code to login first
 
@@ -54,7 +53,7 @@ if __name__ == '__main__':
         time.sleep(5)
         print("Login Successful")
 
-    aBrowserDriver.get(shoeMarketName)
+    #aBrowserDriver.get(shoeMarketName)
 
     def removeError():
         try:
@@ -65,8 +64,47 @@ if __name__ == '__main__':
             print("Code is already removed")
 
     # choosing size (Possibly change this to let me choose the size)
+    x = 0
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print("Current time = " + current_time)
+    status = True
+    while status == True:
+        #staySigned = WebDriverWait(aBrowserDriver, timeToWait).until(
+            #EC.element_to_be_clickable((By.XPATH, '//button[text()="Stay Signed In"]')))
+        #aBrowserDriver.execute_script("arguments[0].click();", staySigned)
+        #print("Sign in button clicked")
+        #print(x)
+        now1 = datetime.now()
+        status = True
+        #current_time1 = now1.strftime("%H%M%S")
+        newTime = ""
+        while status == True:
+            now1 = datetime.now()
+            current_time1 = now1.strftime("%H%M%S")
+            try:
+                staySigned = WebDriverWait(aBrowserDriver, 1).until(
+                                                EC.presence_of_element_located((By.XPATH, '//button[text()="Stay Signed In"]')))
+                aBrowserDriver.execute_script("arguments[0].click();", staySigned)
+                print("Sign in button clicked")
+                print(current_time1)
+            except TimeoutException:
+                test2 = 0
+            finally:
+                newTime = current_time1
+                #print(current_time1)
+
+            current_time1 = int(current_time1)
+            #print("Current time: " + str(current_time1))
+            if current_time1 >= 95500:
+                print("time limit reached")
+                status = False
+        time.sleep(1)
+        #print("Current Time =", current_time1)
+    # Stay Signed in Button appears every eight minutes
+
     element1 = WebDriverWait(aBrowserDriver, timeToWait).until(
-        EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "input_radio_size_050")]')))
+        EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "input_radio_size_090")]')))
     print("product sizes found")
     aBrowserDriver.execute_script("arguments[0].click();", element1)
 
@@ -82,6 +120,12 @@ if __name__ == '__main__':
     time.sleep(2)
 
     # Searching for name on card
+
+    element12 = WebDriverWait(aBrowserDriver, timeToWait).until(
+        EC.presence_of_element_located((By.CLASS_NAME, 'c-form-field__indicator')))
+    aBrowserDriver.execute_script("arguments[0].click();", element12)
+
+    time.sleep(1)
 
     iframes = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located((By.CLASS_NAME, 'js-iframe')))
     print("iframes found")
