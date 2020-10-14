@@ -10,19 +10,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import Variables
+
 #https://shopnicekicks.com/collections/recent-launch/products/nike-dunk-low-sp-university-red-mens-lifestyle-shoe-red-white
 shoeMarketName = "https://www.dtlr.com/pages/releases"
 sMarketName = "https://www.dtlr.com/account/login"
-sUserName = "jonathanlaurent754@gmail.com"
-sPassword = "Soccer!013"
-sAddress = "118 Eastham Court"
-zipCode = "30024"
-City = "Suwanee"
-phoneNumber = "4702469234"
-creditCard = '5275190017799129'
-expireMonth = '9'
-expireYear = '22'
-cvv = '894'
+
 
 timeToWait = 30 * 24 * 60 * 60  # 30 days
 #Make it so that the page refreshes when the timer ends
@@ -41,8 +34,8 @@ if __name__ == '__main__':
     # Login to SNKRSs
     # Need to change code to login first
     def Login():
-        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'customer[email]')]").send_keys(sUserName)
-        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'customer[password]')]").send_keys(sPassword)
+        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'customer[email]')]").send_keys(Variables.sUserName)
+        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'customer[password]')]").send_keys(Variables.sPassword)
         aBrowserDriver.find_element_by_xpath("//button[contains(@name, 'btn_custom_login')]").click()
         print("Login Successful")
 
@@ -65,8 +58,8 @@ if __name__ == '__main__':
         element0 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
                                                                    ((By.XPATH,
                                                                      "//input[contains(@name, 'emailAddress')]")))
-        element0.send_keys(sUserName)
-        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'password')]").send_keys(sPassword)
+        element0.send_keys(Variables.sUserName)
+        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'password')]").send_keys(Variables.sPassword)
         aBrowserDriver.find_element_by_xpath("//input[contains(@value, 'SIGN IN')]").click()
         print("Login Successful")
 
@@ -110,7 +103,7 @@ if __name__ == '__main__':
     element6 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Address")]')))
     print("Address Found")
-    element6.send_keys(sAddress)
+    element6.send_keys(Variables.sAddress)
 
     element7 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "City")]')))
@@ -120,7 +113,7 @@ if __name__ == '__main__':
     element8 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "ZIP code")]')))
     print("Zip code found")
-    element8.send_keys(zipCode)
+    element8.send_keys(Variables.zipCode)
 
     element9 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Phone")]')))
@@ -150,7 +143,7 @@ if __name__ == '__main__':
     element12 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Card number")]')))
     print("card number found")
-    element12.send_keys(creditCard)
+    element12.send_keys(Variables.creditCard)
 
     aBrowserDriver.switch_to.default_content()
 
@@ -185,7 +178,7 @@ if __name__ == '__main__':
     element15 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Security code")]')))
     print("security code found")
-    element15.send_keys(cvv)
+    element15.send_keys(Variables.cvv)
 
     aBrowserDriver.switch_to.default_content()
 
