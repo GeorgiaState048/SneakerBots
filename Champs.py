@@ -1,22 +1,16 @@
 import time
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+import Variables
+
 shoeMarketName = "https://www.footlocker.com/product/~/FY1256.html"
 sMarketName = "https://www.champssports.com/account/login.html"
-sUserName = "jonathanlaurent754@gmail.com"
-sPassword = "Jonathan!013"
-sAddress = "118 Eastham Court"
-zipCode = "30024"
-City = "Suwanee"
-phoneNumber = "4702469234"
-creditCard = '5275190017799129'
-expireMonth = '9'
-expireYear = '22'
-cvv = '894'
+
 
 timeToWait = 30 * 24 * 60 * 60  # 30 days
 #Make it so that the page refreshes when the timer ends
@@ -48,8 +42,8 @@ if __name__ == '__main__':
     def Login():
         email = WebDriverWait(aBrowserDriver, timeToWait).until(
             EC.element_to_be_clickable((By.XPATH, '//input[contains(@type, "email")]')))
-        email.send_keys(sUserName)
-        aBrowserDriver.find_element_by_xpath("//input[contains(@type, 'password')]").send_keys(sPassword)
+        email.send_keys(Variables.sUserName)
+        aBrowserDriver.find_element_by_xpath("//input[contains(@type, 'password')]").send_keys(Variables.sPassword)
         signIns = aBrowserDriver.find_elements_by_xpath("//button[text()='Sign In']")
         time.sleep(5)
         print("Login Successful")
@@ -64,9 +58,47 @@ if __name__ == '__main__':
         except NoSuchElementException:
             print("Code is already removed")
 
+
+    x = 0
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print("Current time = " + current_time)
+    status = True
+    while status == True:
+        # staySigned = WebDriverWait(aBrowserDriver, timeToWait).until(
+        # EC.element_to_be_clickable((By.XPATH, '//button[text()="Stay Signed In"]')))
+        # aBrowserDriver.execute_script("arguments[0].click();", staySigned)
+        # print("Sign in button clicked")
+        # print(x)
+        now1 = datetime.now()
+        status = True
+        # current_time1 = now1.strftime("%H%M%S")
+        newTime = ""
+        while status == True:
+            now1 = datetime.now()
+            current_time1 = now1.strftime("%H%M%S")
+            try:
+                staySigned = WebDriverWait(aBrowserDriver, 1).until(
+                    EC.presence_of_element_located((By.XPATH, '//button[text()="Stay Signed In"]')))
+                aBrowserDriver.execute_script("arguments[0].click();", staySigned)
+                print("Sign in button clicked")
+                print(current_time1)
+            except TimeoutException:
+                test2 = 0
+            finally:
+                newTime = current_time1
+                # print(current_time1)
+
+            current_time1 = int(current_time1)
+            if (96000 - current_time1) < 600:
+                print("time limit reached")
+                print(current_time1)
+                status = False
+        time.sleep(1)
     # choosing size (Possibly change this to let me choose the size)
+
     element1 = WebDriverWait(aBrowserDriver, timeToWait).until(
-        EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "input_radio_size_090")]')))
+        EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "input_radio_size_105")]')))
     print("product sizes found")
     aBrowserDriver.execute_script("arguments[0].click();", element1)
 
@@ -97,10 +129,12 @@ if __name__ == '__main__':
     element13 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@id, "encryptedSecurityCode")]')))
     print("CVV found")
-    element13.send_keys(cvv)
+    element13.send_keys(Variables.cvv)
 
     aBrowserDriver.switch_to.default_content()
 
     element16 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.element_to_be_clickable((By.XPATH, '//button[text()="Place Order"]')))
     print("Checkout Button Found")
+    aBrowserDriver.execute_script("arguments[0].click();", element16)
+    print("PRODUCT BOUGHT")

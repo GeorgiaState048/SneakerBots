@@ -1,7 +1,6 @@
 import time
 import datetime
 
-import openpyxl
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
@@ -11,6 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import Variables
 #https://shopnicekicks.com/collections/recent-launch/products/nike-dunk-low-sp-university-red-mens-lifestyle-shoe-red-white
 #https://shopnicekicks.com/collections/recent-launch/products/nike-daybreak-sp-mens-lifestyle-shoe-sail-teal-navy
 #try to login first
@@ -18,18 +18,9 @@ from selenium.webdriver.chrome.options import Options
 # sMarketName = "https://www.nike.com/launch" #Feed
 # sMarketName = "https://www.nike.com/launch?s=upcoming" #Upcoming
 # sMarketName = "https://www.nike.com/launch?s=in-stock" #In Stock
-shoeMarketName = "https://shopnicekicks.com/collections/recent-launch/products/nike-daybreak-sp-mens-lifestyle-shoe-sail-teal-navy"
+#shoeMarketName = "https://shopnicekicks.com/collections/recent-launch/products/nike-daybreak-sp-mens-lifestyle-shoe-sail-teal-navy"
 sMarketName = "https://shopnicekicks.com/account/login"
-sUserName = "jonathanlaurent754@gmail.com"
-sPassword = "Soccer!013"
-sAddress = "118 Eastham Court"
-zipCode = "30024"
-City = "Suwanee"
-phoneNumber = "4702469234"
-creditCard = '5275190017799129'
-expireMonth = '9'
-expireYear = '22'
-cvv = '894'
+
 
 timeToWait = 30 * 24 * 60 * 60  # 30 days
 #Make it so that the page refreshes when the timer ends
@@ -42,7 +33,7 @@ if __name__ == '__main__':
     aBrowserDriver.maximize_window()
     aBrowserDriver.get(sMarketName)
 
-    time.sleep(30)
+    #time.sleep(30)
 
     # Login to SNKRSs
     # Need to change code to login first
@@ -53,7 +44,7 @@ if __name__ == '__main__':
         aBrowserDriver.find_element_by_xpath("//input[contains(@value, 'SIGN IN')]").click()
         print("Login Successful")"""
 
-    aBrowserDriver.get(shoeMarketName)
+    #aBrowserDriver.get(shoeMarketName)
     def removeError():
         try:
             element2 = aBrowserDriver.find_element_by_xpath('//button[text()="Dismiss this error"]')
@@ -68,8 +59,8 @@ if __name__ == '__main__':
         element0 = WebDriverWait(aBrowserDriver, timeToWait).until(EC.presence_of_element_located
                                                                    ((By.XPATH,
                                                                      "//input[contains(@name, 'emailAddress')]")))
-        element0.send_keys(sUserName)
-        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'password')]").send_keys(sPassword)
+        element0.send_keys(Variables.sUserName)
+        aBrowserDriver.find_element_by_xpath("//input[contains(@name, 'password')]").send_keys(Variables.sPassword)
         aBrowserDriver.find_element_by_xpath("//input[contains(@value, 'SIGN IN')]").click()
         print("Login Successful")
 
@@ -78,7 +69,7 @@ if __name__ == '__main__':
         EC.element_to_be_clickable((By.XPATH, "//button[contains(@data-action, 'add-to-cart')]")))
 
     #choosing size (Possibly change this to let me choose the size)
-    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "option-0-7")]')))
+    elementT = WebDriverWait(aBrowserDriver, timeToWait).until(EC.element_to_be_clickable((By.XPATH, '//label[contains(@for, "option-0-11")]')))
     print("product sizes found")
     element1 = aBrowserDriver.find_elements_by_class_name('SizeSwatch__Radio')
     aBrowserDriver.execute_script("arguments[0].click();", elementT)
@@ -121,7 +112,7 @@ if __name__ == '__main__':
     element11 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Card number")]')))
     print("card number found")
-    element11.send_keys(creditCard)
+    element11.send_keys(Variables.creditCard)
 
     aBrowserDriver.switch_to.default_content()
 
@@ -156,10 +147,11 @@ if __name__ == '__main__':
     element11 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.presence_of_element_located((By.XPATH, '//input[contains(@placeholder, "Security code")]')))
     print("security code found")
-    element11.send_keys(cvv)
+    element11.send_keys(Variables.cvv)
 
     aBrowserDriver.switch_to.default_content()
 
     element12 = WebDriverWait(aBrowserDriver, timeToWait).until(
         EC.element_to_be_clickable((By.XPATH, '//button[contains(@id, "continue_button")]')))
     print("Checkout Button Found")
+    element12.click()

@@ -1,0 +1,13 @@
+sUserName = "test"
+sEmail = "test"
+sPassword = "test"
+FirstName = 'test'
+LastName = 'test'
+sAddress = "test"
+zipCode = "test"
+City = "test"
+phoneNumber = "test"
+creditCard = 'test'
+expireMonth = 'test'
+expireYear = 'test'
+cvv = 'test'
